@@ -14,11 +14,17 @@
     <!--HEADER-->
     <header class="header">
       <div class="header__container">
-        <img
-          src="./assets/img/avatar.jpg"
+        <a
+          href="https://github.com/RockyCott"
+          target="_blank"
           class="header__img"
-          alt="imagen de perfil"
-        />
+        >
+          <img
+            src="./assets/img/avatar.jpg"
+            class="header__img cursor-pointer"
+            alt="imagen de perfil"
+          />
+        </a>
         <div class="header__search">
           <input
             type="search"
@@ -55,25 +61,26 @@
                 <span class="nav__name">Math Operations</span>
               </a>
               <!-- fin operaciones matematicas -->
-              <a
+              <!-- <a
                 class="nav__link active"
                 onclick="cargar_contenido('collisionDetection')"
               >
                 <i class="bx bxl-codepen nav__icon"></i>
                 <span class="nav__name">Collision Detection</span>
-              </a>
-              <a href="#" class="nav__link active">
+              </a> -->
+              <a
+                class="nav__link active"
+                onclick="cargar_contenido('fibonacci')"
+              >
                 <i class="bx bxl-graphql nav__icon"></i>
-                <span class="nav__name" onclick="cargar_contenido('fibonacci')"
-                  >Fibonacci</span
-                >
+                <span class="nav__name">Fibonacci</span>
               </a>
-              <a class="nav__link" onclick="prueba()">
+              <!-- <a class="nav__link" onclick="prueba()">
                 <i class="bx bx-message-rounded nav__icon"></i>
                 <span class="nav__name">Messages</span>
-              </a>
+              </a> -->
             </div>
-            <div class="nav__items">
+            <!-- <div class="nav__items">
               <h3 class="nav__subtitle">Menu</h3>
               <div class="nav__dropdown">
                 <a href="#" class="nav__link">
@@ -99,7 +106,7 @@
                 <i class="bx bx-bookmark nav__icon"></i>
                 <span class="nav__name">Saved</span>
               </a>
-            </div>
+            </div> -->
           </div>
         </div>
         <a
@@ -120,7 +127,7 @@
           type="text/html"
           src="app/components/start/start.html"
           width="100%"
-          height="100%"
+          style="height: 75vh"
         />
       </section>
     </main>

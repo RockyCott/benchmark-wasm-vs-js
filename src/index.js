@@ -56,6 +56,7 @@ function cargar_contenido(file_path) {
   const embed = document.getElementById("embed");
   if (embed) {
     embed.src = urlHTML;
+    //last_html = urlHTML;
     //embed.src = "app/components/not-found/not-found.html";
   }
 }

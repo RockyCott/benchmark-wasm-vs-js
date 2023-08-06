@@ -42,6 +42,10 @@ body {
   color: var(--text-color); */
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 h3 {
   margin: 0;
 }
@@ -290,3 +294,4 @@ img {
     opacity: 1;
   }
 } /*# sourceMappingURL=style.css.map */
+

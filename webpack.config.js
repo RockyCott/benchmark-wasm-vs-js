@@ -19,8 +19,13 @@ module.exports = {
   plugins: [
     new CopyPlugin([path.resolve(__dirname, "src")]),
 
-    new WasmPackPlugin({
-      crateDirectory: path.resolve(__dirname, "crates/math-operations")
-    })
+    // new WasmPackPlugin({
+    //   crateDirectory: path.resolve(__dirname, "crates/math-operations"),
+    //   extraArgs: "--target web"
+    // }),
+    // new WasmPackPlugin({
+    //   crateDirectory: path.resolve(__dirname, "crates/fibonacci"),
+    //   extraArgs: "--target web"
+    // }),
   ]
 };
