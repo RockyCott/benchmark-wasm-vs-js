@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="fib.js"></script>
+    <script type="module" src="fibonacci.js"></script>
+  </head>
+  <body>
+    <div>
+      <p>
+        <button id="run_button">run</button>
+        <span id="message">Loading WebAssembly</span>
+      </p>
+      <p>
+        Result (average [ms])<br />
+        JavaScript: <span id="js_performance"></span><br />
+        WebAssembly: <span id="ws_performance"></span><br />
+        JavaScript/WebAssembly: <span id="comparison"></span><br />
+      </p>
+    </div>
+  </body>
+</html>

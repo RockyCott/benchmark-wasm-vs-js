@@ -20,7 +20,7 @@ module.exports = {
     new CopyPlugin([path.resolve(__dirname, "src")]),
 
     new WasmPackPlugin({
-      crateDirectory: path.resolve(__dirname, "crates")
+      crateDirectory: path.resolve(__dirname, "crates/math-operations")
     })
   ]
 };

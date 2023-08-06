@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Rust + Webpack project!</title>
+    <title>BenchMark Wasm vs Js</title>
     <link rel="stylesheet" href="./assets/styles/style.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
@@ -20,7 +20,11 @@
           alt="imagen de perfil"
         />
         <div class="header__search">
-          <input type="search" placeholder="Buscar..." class="header__input" />
+          <input
+            type="search"
+            placeholder="Donde están las gatas"
+            class="header__input"
+          />
           <i class="bx bx-search"></i>
         </div>
         <div class="header__toggle">
@@ -37,8 +41,7 @@
             target="_blank"
             class="nav__link nav__logo"
           >
-            W
-            <span class="nav__logo-name">ebAssembly</span>
+            W <span class="nav__logo-name">ebAssembly</span>
           </a>
           <div class="nav__list">
             <div class="nav__items">
@@ -46,46 +49,26 @@
               <!-- operaciones matematicas -->
               <a
                 class="nav__link active"
-                onclick="cargarContenido('mathOperations')"
+                onclick="cargar_contenido('mathOperations')"
               >
                 <i class="bx bx-math nav__icon"></i>
                 <span class="nav__name">Math Operations</span>
               </a>
+              <!-- fin operaciones matematicas -->
               <a
                 class="nav__link active"
-                onclick="cargarContenido('collisionDetection')"
+                onclick="cargar_contenido('collisionDetection')"
               >
                 <i class="bx bxl-codepen nav__icon"></i>
                 <span class="nav__name">Collision Detection</span>
               </a>
               <a href="#" class="nav__link active">
                 <i class="bx bxl-graphql nav__icon"></i>
-                <span
-                  class="nav__name"
-                  onclick="cargarContenido('collisionDetection')"
+                <span class="nav__name" onclick="cargar_contenido('fibonacci')"
                   >Fibonacci</span
                 >
               </a>
-              <!-- <div class="nav__dropdown">
-                <a href="#" class="nav__link">
-                  <i class="bx bx-user nav__icon"></i>
-                  <span class="nav__name">Profile</span>
-                  <i
-                    class="bx bx-chevron-down nav__icon nav__dropdown-icon"
-                  ></i>
-                </a>
-                <div class="nav__dropdown-collapse">
-                  <div class="nav__dropdown-content">
-                    <a href="#" class="nav__dropdown-item">Passwords</a>
-                    <a href="#" class="nav__dropdown-item">Mail</a>
-                    <a href="#" class="nav__dropdown-item">Accounts</a>
-                  </div>
-                </div>
-              </div> -->
-              <a
-                class="nav__link"
-                onclick="cargarContenido('tests/prueba2.html', 'tests/prueba2.js')"
-              >
+              <a class="nav__link" onclick="prueba()">
                 <i class="bx bx-message-rounded nav__icon"></i>
                 <span class="nav__name">Messages</span>
               </a>
@@ -119,23 +102,26 @@
             </div>
           </div>
         </div>
-        <a href="#" class="nav__link nav__logout">
-          <i class="bx bx-log-out nav__icon"></i>
-          <span class="nav__name">Log Out</span>
+        <a
+          href="https://github.com/RockyCott"
+          target="_blank"
+          class="nav__link nav__logout"
+        >
+          <i class="bx bxl-github nav__icon"></i>
+          <span class="nav__name">RockyCott</span>
         </a>
       </nav>
     </div>
     <!--CONTENIDO-->
     <main>
       <section>
-        <div class="contenido" id="contenido">
-          <!-- Contenido inicial -->
-          <h2>Bienvenido</h2>
-          <p>
-            Selecciona una opción del sidebar para ver el contenido
-            correspondiente.
-          </p>
-        </div>
+        <embed
+          id="embed"
+          type="text/html"
+          src="app/components/start/start.html"
+          width="100%"
+          height="100%"
+        />
       </section>
     </main>
 
