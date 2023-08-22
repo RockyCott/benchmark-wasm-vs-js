@@ -1,0 +1,14 @@
+{
+  "name": "sum-consecutiva",
+  "version": "0.1.0",
+  "files": [
+    "sum_consecutiva_bg.wasm",
+    "sum_consecutiva.js",
+    "sum_consecutiva.d.ts"
+  ],
+  "module": "sum_consecutiva.js",
+  "types": "sum_consecutiva.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
