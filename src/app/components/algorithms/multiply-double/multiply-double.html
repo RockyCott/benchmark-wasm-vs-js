@@ -3,8 +3,8 @@
   <head lang="en">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="libs/cpp/fib.js"></script>
-    <script type="module" src="fibonacci.js"></script>
+    <script src="libs/cpp/multiplyDouble.js"></script>
+    <script type="module" src="multiply-double.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
@@ -43,13 +43,13 @@
       ::-webkit-scrollbar {
         display: none;
       }
-      body {
-        overflow: hidden;
-      }
     </style>
   </head>
   <body>
     <div class="container default-column center">
+      <p>
+        Un calculo de potencia de 1 elevado a un numero dado
+      </p>
       <div class="w80 default-column fieldset center">
         <div class="w100" style="border-bottom: 1px solid">
           <br />
@@ -67,7 +67,7 @@
             <br />
           </form>
           <button id="run_button" class="button-run pure-button" disabled>
-            Run Fibonacci
+            Run Power
           </button>
 
           <br />
@@ -79,12 +79,9 @@
             JavaScript: <span id="js_performance"></span><br />
             Cpp-Wasm: <span id="c_ws_performance"></span><br />
             Rust-Wasm: <span id="rust_ws_performance"></span><br />
-            <!-- Rust2-WebAssembly: <span id="rust2_ws_performance"></span><br /> -->
             JavaScript/Cpp-Wasm: <span id="c_ws_comparison"></span><br />
             JavaScript/Rust-Wasm: <span id="rust_ws_comparison"></span
             ><br />
-            <!-- JavaScript/Rust2-WebAssembly: <span id="rust2_ws_comparison"></span
-            ><br /> -->
           </p>
         </div>
       </div>

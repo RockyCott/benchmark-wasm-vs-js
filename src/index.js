@@ -32,13 +32,19 @@ const file_paths = Object.freeze({
   mathOperations: {
     html: "app/components/algorithms/math-operations/math-operations.html",
   },
-  collisionDetection: {
-    html:
-      "app/components/algorithms/collision-detection/collision-detection.html",
-  },
   fibonacci: {
     html: "app/components/algorithms/fibonacci/fibonacci.html",
   },
+  sumConsecutiva: {
+    html: "app/components/algorithms/sum-consecutiva/sum-consecutiva.html",
+  },
+  multiplyDouble: {
+    html:
+      "app/components/algorithms/multiply-double/multiply-double.html",
+  },
+  rayTracer: {
+    html: "app/components/ray-tracer/ray-tracer.html",
+  }
 });
 
 function cargar_contenido(file_path) {
@@ -56,7 +62,7 @@ function cargar_contenido(file_path) {
   const embed = document.getElementById("embed");
   if (embed) {
     embed.src = urlHTML;
-    //last_html = urlHTML;
+    last_html = urlHTML;
     //embed.src = "app/components/not-found/not-found.html";
   }
 }

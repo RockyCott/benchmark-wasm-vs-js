@@ -3,14 +3,13 @@
   <head lang="en">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="libs/cpp/fib.js"></script>
-    <script type="module" src="fibonacci.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
       integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls"
       crossorigin="anonymous"
     />
+    <script type="module" src="sum-consecutiva.js"></script>
     <style>
       .button-run {
         color: white;
@@ -43,19 +42,26 @@
       ::-webkit-scrollbar {
         display: none;
       }
-      body {
-        overflow: hidden;
-      }
     </style>
   </head>
   <body>
     <div class="container default-column center">
+      <p>
+        La idea es probar la suma consecutiva de números naturales, es decir, si
+        tenemos el número 5, la suma consecutiva sería 1 + 2 + 3 + 4 + 5 = 15.
+        Todo esto utilizando la fórmula de la serie aritmética.
+        Este algoritmo solamente se ejecutará en JavaScript y en Rust+Wasm, para poder
+        probar el manejo de punto flotante de 64 bits en WebAssembly.
+
+      </p>
       <div class="w80 default-column fieldset center">
         <div class="w100" style="border-bottom: 1px solid">
           <br />
           <span
             >Component Status:
-            <span id="message" style="font-weight: bold">Loading WebAssembly</span></span
+            <span id="message" style="font-weight: bold"
+              >Loading WebAssembly</span
+            ></span
           >
           <br />
           <h3>Configure</h3>
@@ -67,7 +73,7 @@
             <br />
           </form>
           <button id="run_button" class="button-run pure-button" disabled>
-            Run Fibonacci
+            Run Add
           </button>
 
           <br />
@@ -77,14 +83,8 @@
           <h3>Results (average [ms])</h3>
           <p>
             JavaScript: <span id="js_performance"></span><br />
-            Cpp-Wasm: <span id="c_ws_performance"></span><br />
             Rust-Wasm: <span id="rust_ws_performance"></span><br />
-            <!-- Rust2-WebAssembly: <span id="rust2_ws_performance"></span><br /> -->
-            JavaScript/Cpp-Wasm: <span id="c_ws_comparison"></span><br />
-            JavaScript/Rust-Wasm: <span id="rust_ws_comparison"></span
-            ><br />
-            <!-- JavaScript/Rust2-WebAssembly: <span id="rust2_ws_comparison"></span
-            ><br /> -->
+            JavaScript/Rust-Wasm: <span id="rust_ws_comparison"></span><br />
           </p>
         </div>
       </div>

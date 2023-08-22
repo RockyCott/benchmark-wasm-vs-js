@@ -1,4 +1,4 @@
-import init, { fibonacci as rust_fibonacci } from "./libs/rust/pkg/fibonacci.js";
+import init, {multiply_double as rust_multiply_double } from "./libs/rust/pkg/multiply_double.js";
 // import * as wasm from "./rust2/fibRust.js";
 let rust_load = false;
 let cpp_load = false;
@@ -21,24 +21,30 @@ rustLoad();
 // esperar a que cargue el body
 document.addEventListener("DOMContentLoaded", ngInit);
 
-function jsFib(n) {
-  if (n === 0) return 0;
-  if (n === 1) return 1;
-  return jsFib(n - 1) + jsFib(n - 2);
+function jsMultiplyDouble(a, b, n) {
+  let c = 1.0;
+  for (let i = 0; i < n; i++) {
+    c = c * a * b;
+  }
+  return c;
 }
 
 // fibonacci escrito en rust
 
 let module,
   functions = {};
-fetch("libs/cpp/fib.wasm")
+fetch("libs/cpp/multiplyDouble.wasm")
   .then((response) => response.arrayBuffer())
   .then((buffer) => new Uint8Array(buffer))
   .then((binary) => {
     let moduleArgs = {
       wasmBinary: binary,
       onRuntimeInitialized: function() {
-        functions.fib = module.cwrap("fib", "number", ["number"]);
+        functions.multiplyDouble = module.cwrap("multiplyDouble", "number", [
+          "number",
+          "number",
+          "number",
+        ]);
         cpp_load = true;
         console.log("cpp loaded");
         onReady();
@@ -78,29 +84,23 @@ function start() {
     // rust2wsComparison.innerText = "";
 
     function checkFunctionality(n) {
-      console.log(timeNow());
-      const rustwsResult = rust_fibonacci(n);
-      console.log("Rust Wasm Result", rustwsResult);
-      console.log(timeNow());
-      const cwsResult = functions.fib(n);
-      console.log("C Wasm Result", cwsResult);
-      console.log(timeNow());
-      const jsResult = jsFib(n);
-      console.log("Js Result", jsResult);
-      console.log(timeNow());
-      // const rustws2Result = wasm.fib(n);
+      const rustwsResult = rust_multiply_double(1.0, 1.0, n);
+      const cwsResult = functions.multiplyDouble(1.0, 1.0, n);
+      const jsResult = jsMultiplyDouble(1.0, 1.0, n);
       // evaluar si los tres valores son iguales
       return jsResult === cwsResult && jsResult === rustwsResult;
     }
 
     function run(func, n, loop) {
-      func(n); // warm-up
-      let startTime = performance.now();
+      func(1.0, 1.0, n); // warm-up
+      let elapsedTime = 0.0;
       for (let i = 0; i < loop; i++) {
-        func(n);
+        const startTime = performance.now();
+        func(1.0, 1.0, n);
+        const endTime = performance.now();
+        elapsedTime += (endTime - startTime);
       }
-      let endTime = performance.now();
-      const time = ((endTime - startTime) / loop).toFixed(4);
+      const time = (elapsedTime / loop).toFixed(4);
       return time;
     }
 
@@ -113,11 +113,11 @@ function start() {
         return;
       }
       setTimeout(function() {
-        jsPerformance.innerText = run(jsFib, num, loop);
+        jsPerformance.innerText = run(jsMultiplyDouble, num, loop);
         setTimeout(function() {
-          cwsPerformance.innerText = run(functions.fib, num, loop);
+          cwsPerformance.innerText = run(functions.multiplyDouble, num, loop);
           setTimeout(function() {
-            rustwsPerformance.innerText = run(rust_fibonacci, num, loop);
+            rustwsPerformance.innerText = run(rust_multiply_double, num, loop);
             cwsComparison.innerText = (
               Number(jsPerformance.innerText) / Number(cwsPerformance.innerText)
             ).toFixed(4);
@@ -175,23 +175,3 @@ function timeNow() {
 
   return cadenaTiempo;
 }
-
-// tengo un algoritmo de tiempo de 1.5 segundos y otro que dura 2 segundos, como puedo hacer la comparacion del algoritmo 1 cuantas veces es mas rapdio que el 2
-
-// function init() {
-//   // putCode("test_code_area", document.getElementById("test_code").text.trim());
-//   // putCode("js_code_area", document.getElementById("js_code").text.trim());
-
-//   // loadTextFile("fib.c", function(text) {
-//   //   putCode("ws_code_area", text.trim());
-//   // });
-
-//   // loadTextFile("fib.sh", function(text) {
-//   //   putCode("sh_code_area", text.trim());
-//   // });
-
-//   // putCode(
-//   //   "ws_instantiate_code_area",
-//   //   document.getElementById("ws_instantiate_code").text.trim()
-//   // );
-// }

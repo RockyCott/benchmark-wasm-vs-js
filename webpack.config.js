@@ -7,14 +7,14 @@ const dist = path.resolve(__dirname, "dist");
 module.exports = {
   mode: "production",
   entry: {
-    main: "./js/main.js"
+    main: "./js/main.js",
   },
   output: {
     path: dist,
-    filename: "[name].js"
+    filename: "[name].js",
   },
   devServer: {
-    contentBase: dist
+    contentBase: dist,
   },
   plugins: [
     new CopyPlugin([path.resolve(__dirname, "src")]),
@@ -27,5 +27,5 @@ module.exports = {
     //   crateDirectory: path.resolve(__dirname, "crates/fibonacci"),
     //   extraArgs: "--target web"
     // }),
-  ]
+  ],
 };
