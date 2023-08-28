@@ -42,6 +42,10 @@ const file_paths = Object.freeze({
     html:
       "app/components/algorithms/multiply-double/multiply-double.html",
   },
+  multiplyIntVector: {
+    html:
+      "app/components/algorithms/multiply-int-vector/multiply-int-vector.html",
+  },
   rayTracer: {
     html: "app/components/ray-tracer/ray-tracer.html",
   }

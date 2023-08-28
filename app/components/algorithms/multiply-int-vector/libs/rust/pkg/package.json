@@ -1,0 +1,14 @@
+{
+  "name": "multiply-int-vector",
+  "version": "0.1.0",
+  "files": [
+    "multiply_int_vector_bg.wasm",
+    "multiply_int_vector.js",
+    "multiply_int_vector.d.ts"
+  ],
+  "module": "multiply_int_vector.js",
+  "types": "multiply_int_vector.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
