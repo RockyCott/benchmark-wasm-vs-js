@@ -46,6 +46,10 @@ const file_paths = Object.freeze({
     html:
       "app/components/algorithms/multiply-int-vector/multiply-int-vector.html",
   },
+  collisionDetection: {
+    html:
+    "app/components/algorithms/collision-detection/collision-detection.html",
+  },
   rayTracer: {
     html: "app/components/ray-tracer/ray-tracer.html",
   }
