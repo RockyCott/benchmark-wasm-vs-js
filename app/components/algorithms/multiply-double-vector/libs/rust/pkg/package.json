@@ -1,0 +1,14 @@
+{
+  "name": "multiply-double-vector",
+  "version": "0.1.0",
+  "files": [
+    "multiply_double_vector_bg.wasm",
+    "multiply_double_vector.js",
+    "multiply_double_vector.d.ts"
+  ],
+  "module": "multiply_double_vector.js",
+  "types": "multiply_double_vector.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

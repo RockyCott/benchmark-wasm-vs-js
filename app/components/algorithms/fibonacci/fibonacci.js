@@ -78,16 +78,12 @@ function start() {
     // rust2wsComparison.innerText = "";
 
     function checkFunctionality(n) {
-      console.log(timeNow());
       const rustwsResult = rust_fibonacci(n);
       console.log("Rust Wasm Result", rustwsResult);
-      console.log(timeNow());
       const cwsResult = functions.fib(n);
       console.log("C Wasm Result", cwsResult);
-      console.log(timeNow());
       const jsResult = jsFib(n);
       console.log("Js Result", jsResult);
-      console.log(timeNow());
       // const rustws2Result = wasm.fib(n);
       // evaluar si los tres valores son iguales
       return jsResult === cwsResult && jsResult === rustwsResult;
@@ -100,7 +96,7 @@ function start() {
         func(n);
       }
       let endTime = performance.now();
-      const time = ((endTime - startTime) / loop).toFixed(4);
+      const time = ((endTime - startTime) / loop).toFixed(8);
       return time;
     }
 
@@ -120,11 +116,11 @@ function start() {
             rustwsPerformance.innerText = run(rust_fibonacci, num, loop);
             cwsComparison.innerText = (
               Number(jsPerformance.innerText) / Number(cwsPerformance.innerText)
-            ).toFixed(4);
+            ).toFixed(8);
             rustwsComparison.innerText = (
               Number(jsPerformance.innerText) /
               Number(rustwsPerformance.innerText)
-            ).toFixed(4);
+            ).toFixed(8);
             document.getElementById("message").innerText = "Done";
             document.getElementById("run_button").disabled = false;
           });

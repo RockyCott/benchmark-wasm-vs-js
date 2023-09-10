@@ -1,0 +1,14 @@
+{
+  "name": "sum-double",
+  "version": "0.1.0",
+  "files": [
+    "sum_double_bg.wasm",
+    "sum_double.js",
+    "sum_double.d.ts"
+  ],
+  "module": "sum_double.js",
+  "types": "sum_double.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

@@ -29,26 +29,50 @@ let last_js = "";
 
 // objeto con las rutas de los archivos
 const file_paths = Object.freeze({
+  collisionDetection: {
+    html:
+    "app/components/algorithms/collision-detection/collision-detection.html",
+  },
   mathOperations: {
     html: "app/components/algorithms/math-operations/math-operations.html",
   },
   fibonacci: {
     html: "app/components/algorithms/fibonacci/fibonacci.html",
   },
-  sumConsecutiva: {
-    html: "app/components/algorithms/sum-consecutiva/sum-consecutiva.html",
-  },
   multiplyDouble: {
     html:
-      "app/components/algorithms/multiply-double/multiply-double.html",
+    "app/components/algorithms/multiply-double/multiply-double.html",
   },
   multiplyIntVector: {
     html:
-      "app/components/algorithms/multiply-int-vector/multiply-int-vector.html",
+    "app/components/algorithms/multiply-int-vector/multiply-int-vector.html",
   },
-  collisionDetection: {
+  multiplyDoubleVector: {
     html:
-    "app/components/algorithms/collision-detection/collision-detection.html",
+    "app/components/algorithms/multiply-double-vector/multiply-double-vector.html",
+  },
+  quicksortInt: {
+    html: "app/components/algorithms/quicksort-int/quicksort-int.html",
+  },
+  quicksortDouble: {
+    html: "app/components/algorithms/quicksort-double/quicksort-double.html",
+  },
+  sumInt: {
+    html: "app/components/algorithms/sum-int/sum-int.html",
+  },
+  sumDouble: {
+    html: "app/components/algorithms/sum-double/sum-double.html",
+  },
+  imageConvolute: {
+    html:
+    "app/components/algorithms/image-convolute/image-convolute.html",
+  },
+  videoConvolute: {
+    html:
+    "app/components/algorithms/video-convolute/video-convolute.html",
+  },
+  sumConsecutiva: {
+    html: "app/components/algorithms/sum-consecutiva/sum-consecutiva.html",
   },
   rayTracer: {
     html: "app/components/ray-tracer/ray-tracer.html",
