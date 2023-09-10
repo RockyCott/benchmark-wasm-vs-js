@@ -1,7 +1,8 @@
-import init, {multiply_double as rust_multiply_double } from "./libs/rust/pkg/multiply_double.js";
+import init, {
+  sum_double as rust_sum_double,
+} from "./libs/rust/pkg/sum_double.js";
 // import * as wasm from "./rust2/fibRust.js";
 let rust_load = false;
-let cpp_load = false;
 
 function ngInit() {
   const boton = document.getElementById("run_button");
@@ -11,7 +12,6 @@ function ngInit() {
 async function rustLoad() {
   await init();
   rust_load = true;
-  // await wasm.default();
   console.log("rust loaded");
   onReady();
 }
@@ -21,32 +21,27 @@ rustLoad();
 // esperar a que cargue el body
 document.addEventListener("DOMContentLoaded", ngInit);
 
-function jsMultiplyDouble(a, b, n) {
-  let c = 1.0;
+function jsSumDouble(array, n) {
+  let s = 0;
   for (let i = 0; i < n; i++) {
-    c = c * a * b;
+    s += array[i];
   }
-  return c;
+  return s;
 }
-
-// fibonacci escrito en rust
 
 let module,
   functions = {};
-fetch("libs/cpp/multiplyDouble.wasm")
+fetch("libs/cpp/sumDouble.wasm")
   .then((response) => response.arrayBuffer())
   .then((buffer) => new Uint8Array(buffer))
   .then((binary) => {
     let moduleArgs = {
       wasmBinary: binary,
       onRuntimeInitialized: function() {
-        functions.multiplyDouble = module.cwrap("multiplyDouble", "number", [
-          "number",
+        functions.sumDouble = module.cwrap("sumDouble", "number", [
           "number",
           "number",
         ]);
-        cpp_load = true;
-        console.log("cpp loaded");
         onReady();
       },
     };
@@ -68,71 +63,87 @@ function start() {
     let jsPerformance = document.getElementById("js_performance");
     let cwsPerformance = document.getElementById("c_ws_performance");
     let rustwsPerformance = document.getElementById("rust_ws_performance");
-    // let rust2wsPerformance = document.getElementById("rust2_ws_performance");
 
     let cwsComparison = document.getElementById("c_ws_comparison");
     let rustwsComparison = document.getElementById("rust_ws_comparison");
-    // let rust2wsComparison = document.getElementById("rust2_ws_comparison");
 
     jsPerformance.innerText = "";
     cwsPerformance.innerText = "";
     rustwsPerformance.innerText = "";
-    // rust2wsPerformance.innerText = "";
 
     cwsComparison.innerText = "";
     rustwsComparison.innerText = "";
-    // rust2wsComparison.innerText = "";
 
-    function checkFunctionality(n) {
-      const rustwsResult = rust_multiply_double(1.0, 1.0, n);
-      const cwsResult = functions.multiplyDouble(1.0, 1.0, n);
-      const jsResult = jsMultiplyDouble(1.0, 1.0, n);
-      // evaluar si los tres valores son iguales
-      return jsResult === cwsResult && jsResult === rustwsResult;
+    let array = new Float64Array(num);
+
+    initArray(array);
+
+    function initArray(array) {
+      for (let i = 0, il = array.length; i < il; i++) {
+        array[i] = Math.random() * 20000 - 10000;
+      }
     }
 
-    function run(func, n, loop) {
-      func(1.0, 1.0, n); // warm-up
+    function checkFunctionality(array, n) {
+      const jsResult = jsSumDouble(array, n);
+      const cwsSumResult = cwsSumDouble(array, n);
+      const rustwsResult = rustwsSumDouble(array, n);
+      return jsResult == rustwsResult && jsResult == cwsSumResult;
+    }
+
+    function run(func, array, loop) {
+      func(array, array.length); // warm-up
       let elapsedTime = 0.0;
       for (let i = 0; i < loop; i++) {
-        const startTime = performance.now();
-        func(1.0, 1.0, n);
-        const endTime = performance.now();
-        elapsedTime += (endTime - startTime);
+        let startTime = performance.now();
+        func(array, array.length);
+        let endTime = performance.now();
+        elapsedTime += endTime - startTime;
       }
-      const time = (elapsedTime / loop).toFixed(10);
-      return time;
+      return (elapsedTime / loop).toFixed(4);
+    }
+
+    function cwsSumDouble(array, n) {
+      let pointer = module._malloc(array.length * 8);
+      let offset = pointer / 8;
+      module.HEAPF64.set(array, offset);
+      let result = functions.sumDouble(pointer, n);
+      module._free(pointer);
+      return result;
+    }
+
+    function rustwsSumDouble(array, n) {
+      return rust_sum_double(array, n);
     }
 
     // don't use Promise for the non Promise support browsers so far.
     setTimeout(function() {
-      if (!checkFunctionality(num)) {
+      if (!checkFunctionality(array, num)) {
         document.getElementById("message").innerText =
           "Hay alguna función que no está bien implementada";
         document.getElementById("run_button").disabled = false;
         return;
       }
       setTimeout(function() {
-        jsPerformance.innerText = run(jsMultiplyDouble, num, loop);
+        jsPerformance.innerText = run(jsSumDouble, array, loop);
         setTimeout(function() {
-          cwsPerformance.innerText = run(functions.multiplyDouble, num, loop);
+          cwsPerformance.innerText = run(cwsSumDouble, array, loop);
           setTimeout(function() {
-            rustwsPerformance.innerText = run(rust_multiply_double, num, loop);
+            rustwsPerformance.innerText = run(rustwsSumDouble, array, loop);
             cwsComparison.innerText = (
               Number(jsPerformance.innerText) / Number(cwsPerformance.innerText)
-            ).toFixed(10);
+            ).toFixed(4);
             rustwsComparison.innerText = (
               Number(jsPerformance.innerText) /
               Number(rustwsPerformance.innerText)
-            ).toFixed(10);
+            ).toFixed(4);
             document.getElementById("message").innerText = "Done";
             document.getElementById("run_button").disabled = false;
           });
           document.getElementById("message").innerText =
             "Running Rust WebAssembly";
         });
-        document.getElementById("message").innerText =
-          "Running Cpp WebAssembly";
+        document.getElementById("message").innerText = "Running C WebAssembly";
       });
       document.getElementById("message").innerText = "Running JavaScript";
     });
@@ -141,7 +152,7 @@ function start() {
 }
 
 function onReady() {
-  if (!rust_load || !cpp_load) return;
+  if (!rust_load) return;
   document.getElementById("run_button").disabled = false;
   document.getElementById("message").innerText = "Ready";
 }

@@ -1,5 +1,4 @@
-import init, {multiply_double as rust_multiply_double } from "./libs/rust/pkg/multiply_double.js";
-// import * as wasm from "./rust2/fibRust.js";
+import * as rust_wasm from "./libs/rust/pkg/multiply_double_vector.js";
 let rust_load = false;
 let cpp_load = false;
 
@@ -9,9 +8,8 @@ function ngInit() {
 }
 
 async function rustLoad() {
-  await init();
+  await rust_wasm.default();
   rust_load = true;
-  // await wasm.default();
   console.log("rust loaded");
   onReady();
 }
@@ -21,26 +19,25 @@ rustLoad();
 // esperar a que cargue el body
 document.addEventListener("DOMContentLoaded", ngInit);
 
-function jsMultiplyDouble(a, b, n) {
-  let c = 1.0;
+function jsMultiplyDoubleVec(src1, src2, res, n) {
   for (let i = 0; i < n; i++) {
-    c = c * a * b;
+    res[i] = src1[i] * src2[i];
   }
-  return c;
 }
 
 // fibonacci escrito en rust
 
 let module,
   functions = {};
-fetch("libs/cpp/multiplyDouble.wasm")
+fetch("libs/cpp/multiplyDoubleVec.wasm")
   .then((response) => response.arrayBuffer())
   .then((buffer) => new Uint8Array(buffer))
   .then((binary) => {
     let moduleArgs = {
       wasmBinary: binary,
       onRuntimeInitialized: function() {
-        functions.multiplyDouble = module.cwrap("multiplyDouble", "number", [
+        functions.multiplyDoubleVec = module.cwrap("multiplyDoubleVec", null, [
+          "number",
           "number",
           "number",
           "number",
@@ -63,68 +60,129 @@ function start() {
   if (num === 0 || loop === 0) {
     document.getElementById("message").innerText =
       "Please input both number and loop";
+    document.getElementById("run_button").disabled = false;
   } else if (num > 0 && loop > 0) {
     document.getElementById("run_button").disabled = true;
     let jsPerformance = document.getElementById("js_performance");
     let cwsPerformance = document.getElementById("c_ws_performance");
     let rustwsPerformance = document.getElementById("rust_ws_performance");
-    // let rust2wsPerformance = document.getElementById("rust2_ws_performance");
 
     let cwsComparison = document.getElementById("c_ws_comparison");
     let rustwsComparison = document.getElementById("rust_ws_comparison");
-    // let rust2wsComparison = document.getElementById("rust2_ws_comparison");
 
     jsPerformance.innerText = "";
     cwsPerformance.innerText = "";
     rustwsPerformance.innerText = "";
-    // rust2wsPerformance.innerText = "";
 
     cwsComparison.innerText = "";
     rustwsComparison.innerText = "";
-    // rust2wsComparison.innerText = "";
 
-    function checkFunctionality(n) {
-      const rustwsResult = rust_multiply_double(1.0, 1.0, n);
-      const cwsResult = functions.multiplyDouble(1.0, 1.0, n);
-      const jsResult = jsMultiplyDouble(1.0, 1.0, n);
-      // evaluar si los tres valores son iguales
-      return jsResult === cwsResult && jsResult === rustwsResult;
+    let src1 = new Float64Array(num);
+    let src2 = new Float64Array(num);
+    let src3 = new Float64Array(num);
+
+    let res1 = new Float64Array(num); // for JavaScript
+    let res2 = new Float64Array(num); // for Cpp WebAssembly
+    let res3 = new Float64Array(num); // for Rust WebAssembly
+
+    initArray(src1);
+    initArray(src2);
+    initArray(src3);
+
+    function initArray(array) {
+      for (let i = 0, il = array.length; i < il; i++) {
+        array[i] = Math.random() * 20000 - 10000;
+      }
     }
 
-    function run(func, n, loop) {
-      func(1.0, 1.0, n); // warm-up
+    function equalArray(array1, array2) {
+      if (array1.length !== array2.length) return false;
+      for (let i = 0, il = array1.length; i < il; i++) {
+        if (array1[i] !== array2[i]) return false;
+      }
+      return true;
+    }
+
+    function checkFunctionality() {
+      jsMultiplyDoubleVec(src1, src2, res1, src1.length);
+      cwsMultiplyDoubleVec(src1, src2, res2, src1.length);
+      rustwsMultiplyDoubleVec(src1, src2, res3, src1.length);
+      const jsCppResult = equalArray(res1, res2);
+      const jsRustResult = equalArray(res1, res3);
+      return jsCppResult && jsRustResult;
+    }
+
+    function run(func, src1, src2, res, loop) {
+      func(src1, src2, res, src1.length);
       let elapsedTime = 0.0;
       for (let i = 0; i < loop; i++) {
-        const startTime = performance.now();
-        func(1.0, 1.0, n);
-        const endTime = performance.now();
-        elapsedTime += (endTime - startTime);
+        let startTime = performance.now();
+        func(src1, src2, res, src1.length);
+        let endTime = performance.now();
+        elapsedTime += endTime - startTime;
       }
-      const time = (elapsedTime / loop).toFixed(10);
-      return time;
+      return (elapsedTime / loop).toFixed(4);
+    }
+
+    function cwsMultiplyDoubleVec(src1, src2, res, n) {
+      let pointer1 = module._malloc(src1.length * 8);
+      let pointer2 = module._malloc(src2.length * 8);
+      let pointer3 = module._malloc(res.length * 8);
+      let offset1 = pointer1 / 8;
+      let offset2 = pointer2 / 8;
+      let offset3 = pointer3 / 8;
+      module.HEAPF64.set(src1, offset1);
+      module.HEAPF64.set(src2, offset2);
+      functions.multiplyDoubleVec(pointer1, pointer2, pointer3, n);
+      res.set(module.HEAPF64.subarray(offset3, offset3 + n));
+      module._free(pointer1);
+      module._free(pointer2);
+      module._free(pointer3);
+    }
+
+    function rustwsMultiplyDoubleVec(src1, src2, res, n) {
+      rust_wasm.multiply_double_vector(src1, src2, res, n);
     }
 
     // don't use Promise for the non Promise support browsers so far.
     setTimeout(function() {
-      if (!checkFunctionality(num)) {
+      if (!checkFunctionality()) {
         document.getElementById("message").innerText =
           "Hay alguna función que no está bien implementada";
         document.getElementById("run_button").disabled = false;
         return;
       }
       setTimeout(function() {
-        jsPerformance.innerText = run(jsMultiplyDouble, num, loop);
+        jsPerformance.innerText = run(
+          jsMultiplyDoubleVec,
+          src1,
+          src2,
+          res1,
+          loop
+        );
         setTimeout(function() {
-          cwsPerformance.innerText = run(functions.multiplyDouble, num, loop);
+          cwsPerformance.innerText = run(
+            cwsMultiplyDoubleVec,
+            src1,
+            src2,
+            res2,
+            loop
+          );
           setTimeout(function() {
-            rustwsPerformance.innerText = run(rust_multiply_double, num, loop);
+            rustwsPerformance.innerText = run(
+              cwsMultiplyDoubleVec,
+              src1,
+              src2,
+              res2,
+              loop
+            );
             cwsComparison.innerText = (
               Number(jsPerformance.innerText) / Number(cwsPerformance.innerText)
-            ).toFixed(10);
+            ).toFixed(4);
             rustwsComparison.innerText = (
               Number(jsPerformance.innerText) /
               Number(rustwsPerformance.innerText)
-            ).toFixed(10);
+            ).toFixed(4);
             document.getElementById("message").innerText = "Done";
             document.getElementById("run_button").disabled = false;
           });
