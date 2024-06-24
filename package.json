@@ -1,15 +1,25 @@
 {
-  "author": "RockyCott <danielvege6@.com>",
+  "author": "RockyCott",
   "name": "benchmark-wasm-js",
   "repository": "https://github.com/RockyCott/benchmark-wasm-vs-js",
   "version": "0.1.0",
+  "main": "index.js",
   "scripts": {
-    "start": "rimraf dist pkg && webpack-dev-server --open -d",
-    "build": "rimraf dist pkg && webpack",
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
     "serve": "serve ./dist",
     "deploy": "gh-pages -d dist",
-    "test": "cargo test && wasm-pack test --headless"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "javascript",
+    "rust",
+    "c",
+    "webpack",
+    "wasm",
+    "SPA"
+  ],
+  "license": "ISC",
   "bin": {
     "create-rust-webpack": ".bin/create-rust-webpack.js"
   },
@@ -20,14 +30,24 @@
     ]
   },
   "devDependencies": {
-    "@wasm-tool/wasm-pack-plugin": "^1.1.0",
-    "copy-webpack-plugin": "^5.0.3",
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "html-loader": "^5.0.0",
+    "html-webpack-plugin": "^5.6.0",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
     "gh-pages": "^2.0.1",
     "lint-staged": "^8.1.7",
-    "prettier": "1.15.3",
-    "rimraf": "^3.0.0",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.3",
-    "webpack-dev-server": "^3.7.1"
+    "prettier": "1.15.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "core-js": "^3.37.1",
+    "file-loader": "^6.2.0",
+    "regenerator-runtime": "^0.14.1"
   }
 }

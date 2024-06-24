@@ -3,188 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>BenchMark Wasm vs Js</title>
-    <link rel="stylesheet" href="./assets/styles/style.css" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
+      integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <!--HEADER-->
-    <header class="header">
-      <div class="header__container">
-        <a
-          href="https://github.com/RockyCott"
-          target="_blank"
-          class="header__img"
-        >
-          <img
-            src="./assets/img/avatar.jpg"
-            class="header__img cursor-pointer"
-            alt="imagen de perfil"
-          />
-        </a>
-        <div class="header__search">
-          <input
-            type="search"
-            placeholder="Donde están las gatas"
-            class="header__input"
-          />
-          <i class="bx bx-search"></i>
-        </div>
-        <div class="header__toggle">
-          <i class="bx bx-menu" id="header-toggle"></i>
-        </div>
-      </div>
+    <header class="header" id="header">
     </header>
     <!--NAV-->
     <div class="nav" id="navbar">
-      <nav class="nav__container">
-        <div>
-          <a
-            href="https://webassembly.org/"
-            target="_blank"
-            class="nav__link nav__logo"
-          >
-            W <span class="nav__logo-name">ebAssembly</span>
-          </a>
-          <div class="nav__list">
-            <div class="nav__items">
-              <h3 class="nav__subtitle">Algorithms</h3>
-              <!-- collision detection -->
-              <a class="nav__link" onclick="cargar_contenido('collisionDetection')">
-                <i class="bx bx-cross nav__icon"></i>
-                <span class="nav__name">Collision Detection</span>
-              </a>
-              <!-- operaciones matematicas -->
-              <!-- <a
-                class="nav__link active"
-                onclick="cargar_contenido('mathOperations')"
-              >
-                <i class="bx bx-math nav__icon"></i>
-                <span class="nav__name">Math Operations</span>
-              </a> -->
-              <!-- fin operaciones matematicas -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('fibonacci')"
-              >
-                <i class="bx bxl-graphql nav__icon"></i>
-                <span class="nav__name">Fibonacci</span>
-              </a>
-              <!-- multiply Double -->
-              <a class="nav__link" onclick="cargar_contenido('multiplyDouble')">
-                <i class="bx bx-calculator nav__icon"></i>
-                <span class="nav__name">Multiply Double</span>
-              </a>
-              <!-- multiply Int Vector -->
-              <a class="nav__link" onclick="cargar_contenido('multiplyIntVector')">
-                <i class="bx bx-vector nav__icon"></i>
-                <span class="nav__name">Multiply Int Vector</span>
-              </a>
-              <!-- multiply Double Vector -->
-              <a class="nav__link" onclick="cargar_contenido('multiplyDoubleVector')">
-                <i class="bx bx-vector nav__icon"></i>
-                <span class="nav__name">Multiply Double Vector</span>
-              </a>
-              <!-- QuickSort Int -->
-              <a class="nav__link" onclick="cargar_contenido('quicksortInt')">
-                <i class="bx bx-sort-up nav__icon"></i>
-                <span class="nav__name">QuickSort Int</span>
-              </a>
-              <!-- QuickSort Double -->
-              <a class="nav__link" onclick="cargar_contenido('quicksortDouble')">
-                <i class="bx bx-sort-up nav__icon"></i>
-                <span class="nav__name">QuickSort Double</span>
-              </a>
-              <!-- sum int -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('sumInt')"
-              >
-                <i class="bx bx-add-to-queue nav__icon"></i>
-                <span class="nav__name">Sum Int</span>
-              </a>
-              <!-- sum double -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('sumDouble')"
-              >
-                <i class="bx bx-add-to-queue nav__icon"></i>
-                <span class="nav__name">Sum Double</span>
-              </a>
-              <!-- Image convolute -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('imageConvolute')"
-              >
-                <i class="bx bx-image-alt nav__icon"></i>
-                <span class="nav__name">Image Convolute</span>
-              </a>
-              <!-- Video convolute -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('videoConvolute')"
-              >
-                <i class="bx bx-image-alt nav__icon"></i>
-                <span class="nav__name">Video Convolute</span>
-              </a>
-              <!-- suma consecutiva -->
-              <a
-                class="nav__link active"
-                onclick="cargar_contenido('sumConsecutiva')"
-              >
-                <i class="bx bx-add-to-queue nav__icon"></i>
-                <span class="nav__name">Consecutive Add</span>
-              </a>
-              <!-- Ray tracer -->
-              <a class="nav__link" onclick="cargar_contenido('rayTracer')">
-                <i class="bx bx-leaf nav__icon"></i>
-                <span class="nav__name">RayTracer</span>
-              </a>
-            </div>
-            <!-- <div class="nav__items">
-              <h3 class="nav__subtitle">Menu</h3>
-              <div class="nav__dropdown">
-                <a href="#" class="nav__link">
-                  <i class="bx bx-bell nav__icon"></i>
-                  <span class="nav__name">Notifications</span>
-                  <i
-                    class="bx bx-chevron-down nav__icon nav__dropdown-icon"
-                  ></i>
-                </a>
-                <div class="nav__dropdown-collapse">
-                  <div class="nav__dropdown-content">
-                    <a href="#" class="nav__dropdown-item">Blocked</a>
-                    <a href="#" class="nav__dropdown-item">Silenced</a>
-                    <a href="#" class="nav__dropdown-item">Publish</a>
-                  </div>
-                </div>
-              </div>
-              <a href="#" class="nav__link">
-                <i class="bx bx-compass nav__icon"></i>
-                <span class="nav__name">Explore</span>
-              </a>
-              <a href="#" class="nav__link">
-                <i class="bx bx-bookmark nav__icon"></i>
-                <span class="nav__name">Saved</span>
-              </a>
-            </div> -->
-          </div>
-        </div>
-        <a
-          href="https://github.com/RockyCott"
-          target="_blank"
-          class="nav__link nav__logout"
-        >
-          <i class="bx bxl-github nav__icon"></i>
-          <span class="nav__name">RockyCott</span>
-        </a>
-      </nav>
     </div>
     <!--CONTENIDO-->
-    <main>
+    <!-- <main>
       <section>
         <embed
           id="embed"
@@ -194,8 +35,11 @@
           style="height: 85vh"
         />
       </section>
+    </main> -->
+    <main class="main">
+      <section id="content">
+        <div class="loading"></div>
+      </section>
     </main>
-
-    <script src="./index.js"></script>
   </body>
 </html>
