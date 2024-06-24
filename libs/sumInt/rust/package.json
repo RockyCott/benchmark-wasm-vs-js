@@ -1,0 +1,14 @@
+{
+  "name": "sum-int",
+  "version": "0.1.0",
+  "files": [
+    "sum_int_bg.wasm",
+    "sum_int.js",
+    "sum_int.d.ts"
+  ],
+  "module": "sum_int.js",
+  "types": "sum_int.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
