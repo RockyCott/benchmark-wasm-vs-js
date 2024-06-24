@@ -60,13 +60,13 @@ module.exports = {
         type: "asset/resource",
       },
       // no process wasm files with webpack
-      {
-        test: /\.wasm$/,
-        type: "asset/resource",
-        generator: {
-          filename: "wasm/[base]",
-        },
-      },
+      // {
+      //   test: /\.wasm$/,
+      //   type: "asset/resource",
+      //   generator: {
+      //     filename: "wasm/[base]",
+      //   },
+      // },
     ],
   },
   // Establecemos los plugins que vamos a utilizar
