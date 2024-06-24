@@ -528,7 +528,7 @@ const VideoConvolute = () => {
               loop
               autoplay
               muted
-              src="/assets/videos/video.mp4"
+              src="assets/videos/video.mp4"
               type="video/mp4"
               width="50%"
             ></video

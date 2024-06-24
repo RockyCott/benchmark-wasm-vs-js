@@ -359,7 +359,7 @@ function removePhoto() {
   document.querySelector("#foto").value = "";
   document.querySelector(".delPhoto").classList.add("notBlock");
   document.querySelector("#original_image").remove();
-  const objeto_url = "/assets/images/image2.jpg";
+  const objeto_url = "assets/images/image2.jpg";
   document.querySelector(".prevPhoto div").innerHTML =
     "<img id='original_image' src=" + objeto_url + ">";
 }
@@ -449,7 +449,7 @@ const ImageConvolute = () => {
               <div>
                 <img
                   id="original_image"
-                  src="/assets/images/image2.jpg"
+                  src="assets/images/image2.jpg"
                   alt="imagen"
                 />
               </div>

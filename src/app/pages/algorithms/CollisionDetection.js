@@ -54,8 +54,8 @@ const loadWasm = async () => {
     loadWasmRust();
     // Cargar el módulo de WebAssembly al iniciar el componente
     loadWasmCpp(
-      "/libs/collisionDetection/cpp/collisionDetection.js",
-      "/libs/collisionDetection/cpp/collisionDetection.wasm"
+      "libs/collisionDetection/cpp/collisionDetection.js",
+      "libs/collisionDetection/cpp/collisionDetection.wasm"
     );
   } catch (error) {
     console.error("Error loading WebAssembly module:", error);
