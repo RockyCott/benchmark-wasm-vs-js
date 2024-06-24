@@ -10,6 +10,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 // Archivo necesario para limpiar la carpeta dist cada vez que se haga un cambio.
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const webpack = require("webpack");
+
 //Aquí se encuentra toda la configuración de lo que va a suceder. Modulo para exportar.
 module.exports = {
   // Punto de entrada con su dirección.Aquí vive el código inicial y de aquí parte al desarrollo.
@@ -84,8 +86,15 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       // Configuración de los archivos estáticos que vamos a utilizar, colocandolo en la raiz de la carpeta dist.
-      patterns: [{ from: "src/assets", to: "assets" }, { from: "libs", to: "libs" }],
+      patterns: [
+        { from: "src/assets", to: "assets" },
+        { from: "libs", to: "libs" },
+      ],
     }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /\.js$/,
+      contextRegExp: /algorithms$/,
+    })
   ],
   devServer: {
     static: path.join(__dirname, "dist"),

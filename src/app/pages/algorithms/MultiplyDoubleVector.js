@@ -26,7 +26,7 @@ const loadWasm = async () => {
   try {
     loadWasmRust();
     // Cargar el módulo de WebAssembly al iniciar el componente
-    const ruta = "/libs/mulitplyDoubleVector/cpp/";
+    const ruta = "/libs/multiplyDoubleVector/cpp/";
     loadWasmCpp(`${ruta}multiplyDoubleVec.js`, `${ruta}multiplyDoubleVec.wasm`);
   } catch (error) {
     console.error("Error loading WebAssembly module:", error);
