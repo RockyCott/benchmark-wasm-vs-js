@@ -336,7 +336,7 @@ const CollisionDetection = () => {
   const view = /*html*/ `
     <div class="container default-column center">
         <p>
-        Un calculo de potencia de 1 elevado a un numero dado
+        Un calculo realizado en el campo de la detección de colisiones
         </p>
         <div class="w80 default-column fieldset center">
             <div class="w100" style="border-bottom: 1px solid">
