@@ -1,0 +1,14 @@
+{
+  "name": "image-convolute",
+  "version": "0.1.0",
+  "files": [
+    "image_convolute_bg.wasm",
+    "image_convolute.js",
+    "image_convolute.d.ts"
+  ],
+  "module": "image_convolute.js",
+  "types": "image_convolute.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

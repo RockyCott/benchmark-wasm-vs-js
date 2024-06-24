@@ -1,4 +1,6 @@
-import init, { sum_int as rust_sum_int } from "/libs/sumInt/rust/sum_int";
+import init, {
+  sum_double as rust_sum_double,
+} from "/libs/sumDouble/rust/sum_double";
 
 let rust_load = false;
 let cpp_load = false;
@@ -6,7 +8,7 @@ let cpp_load = false;
 let module,
   functions = {};
 
-const SCRIPT_C_TAG = "wasm-sumInt";
+const SCRIPT_C_TAG = "wasm-sumDouble";
 
 /**
  * Funcion para cargar el modulo de WebAssembly de Rust
@@ -18,7 +20,7 @@ const loadWasmRust = async () => {
   onReady();
 };
 
-const jsSumInt = (array, n) => {
+const jsSumDouble = (array, n) => {
   let s = 0;
   for (let i = 0; i < n; i++) {
     s += array[i];
@@ -30,7 +32,10 @@ const loadWasm = async () => {
   try {
     loadWasmRust();
     // Cargar el módulo de WebAssembly al iniciar el componente
-    loadWasmCpp("libs/sumInt/cpp/sumInt.js", "libs/sumInt/cpp/sumInt.wasm");
+    loadWasmCpp(
+      "libs/sumDouble/cpp/sumDouble.js",
+      "libs/sumDouble/cpp/sumDouble.wasm"
+    );
   } catch (error) {
     console.error("Error loading WebAssembly module:", error);
   }
@@ -57,7 +62,7 @@ const loadWasmCpp = async (srcScript, srcWasm) => {
     let moduleArgs = {
       wasmBinary,
       onRuntimeInitialized: function() {
-        functions.sumInt = module.cwrap("sumInt", "number", [
+        functions.sumDouble = module.cwrap("sumDouble", "number", [
           "number",
           "number",
         ]);
@@ -100,20 +105,20 @@ const start = () => {
     cwsComparison.innerText = "";
     rustwsComparison.innerText = "";
 
-    let array = new Int32Array(num);
+    let array = new Float64Array(num);
 
     initArray(array);
 
     function initArray(array) {
       for (let i = 0, il = array.length; i < il; i++) {
-        array[i] = ((Math.random() * 20000) | 0) - 10000;
+        array[i] = Math.random() * 20000 - 10000;
       }
     }
 
     function checkFunctionality(array, n) {
-      const jsResult = jsSumInt(array, n);
-      const cwsSumResult = cwsSumInt(array, n);
-      const rustwsResult = rustwsSumInt(array, n);
+      const jsResult = jsSumDouble(array, n);
+      const cwsSumResult = cwsSumDouble(array, n);
+      const rustwsResult = rustwsSumDouble(array, n);
       return jsResult == rustwsResult && jsResult == cwsSumResult;
     }
 
@@ -129,17 +134,17 @@ const start = () => {
       return (elapsedTime / loop).toFixed(4);
     }
 
-    function cwsSumInt(array, n) {
-      let pointer = module._malloc(array.length * 4);
-      let offset = pointer / 4;
-      module.HEAP32.set(array, offset);
-      let result = functions.sumInt(pointer, n);
+    function cwsSumDouble(array, n) {
+      let pointer = module._malloc(array.length * 8);
+      let offset = pointer / 8;
+      module.HEAPF64.set(array, offset);
+      let result = functions.sumDouble(pointer, n);
       module._free(pointer);
       return result;
     }
 
-    function rustwsSumInt(array, n) {
-      return rust_sum_int(array, n);
+    function rustwsSumDouble(array, n) {
+      return rust_sum_double(array, n);
     }
 
     // don't use Promise for the non Promise support browsers so far.
@@ -151,11 +156,11 @@ const start = () => {
         return;
       }
       setTimeout(function() {
-        jsPerformance.innerText = run(jsSumInt, array, loop);
+        jsPerformance.innerText = run(jsSumDouble, array, loop);
         setTimeout(function() {
-          cwsPerformance.innerText = run(cwsSumInt, array, loop);
+          cwsPerformance.innerText = run(cwsSumDouble, array, loop);
           setTimeout(function() {
-            rustwsPerformance.innerText = run(rustwsSumInt, array, loop);
+            rustwsPerformance.innerText = run(rustwsSumDouble, array, loop);
             cwsComparison.innerText = (
               Number(jsPerformance.innerText) / Number(cwsPerformance.innerText)
             ).toFixed(4);
@@ -204,7 +209,7 @@ const cleanupComponent = () => {
 // Llamada a la función de limpieza al cambiar la ruta
 window.addEventListener("hashchange", cleanupComponent);
 
-const SumInt = () => {
+const SumDouble = () => {
   const view = /*html*/ `
     <div class="container default-column center">
       <div class="w80 default-column fieldset center">
@@ -224,7 +229,7 @@ const SumInt = () => {
             <br />
           </form>
           <button id="run_button" class="button-run pure-button" disabled>
-            Run Int Sum
+            Run Double Sum
           </button>
 
           <br />
@@ -248,4 +253,4 @@ const SumInt = () => {
   return view;
 };
 
-export default SumInt;
+export default SumDouble;

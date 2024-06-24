@@ -7,6 +7,11 @@ import MultiplyIntVector from "../pages/algorithms/MultiplyIntVector";
 import MultiplyDoubleVector from "../pages/algorithms/MultiplyDoubleVector";
 import QuicksortInt from "../pages/algorithms/QuicksortInt";
 import QuicksortDouble from "../pages/algorithms/QuicksortDouble";
+import SumInt from "../pages/algorithms/SumInt";
+import SumDouble from "../pages/algorithms/SumDouble";
+import ImageConvolute from "../pages/algorithms/imageConvolute";
+import VideoConvolute from "../pages/algorithms/videoConvolute";
+import SumConsecutiva from "../pages/algorithms/SumaConsecutiva";
 
 const routes = [
   {
@@ -40,6 +45,26 @@ const routes = [
   {
     path: "/quicksort-double",
     component: QuicksortDouble,
+  },
+  {
+    path: "/sum-int",
+    component: SumInt,
+  },
+  {
+    path: "/sum-double",
+    component: SumDouble,
+  },
+  {
+    path: "/image-convolute",
+    component: ImageConvolute,
+  },
+  {
+    path: "/video-convolute",
+    component: VideoConvolute,
+  },
+  {
+    path: "/sum-consecutiva",
+    component: SumConsecutiva,
   },
   {
     path: "/about",

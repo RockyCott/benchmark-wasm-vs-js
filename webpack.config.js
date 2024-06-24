@@ -25,6 +25,9 @@ module.exports = {
   resolve: {
     extensions: [".js"],
   },
+  experiments: {
+    syncWebAssembly: true,
+  },
   // Se crea un modulo con las reglas necesarias que vamos a utilizar.
   module: {
     //Reglas
@@ -53,8 +56,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif|mp4)$/i,
         type: "asset/resource",
+      },
+      // no process wasm files with webpack
+      {
+        test: /\.wasm$/,
+        type: "asset/resource",
+        generator: {
+          filename: "wasm/[base]",
+        },
       },
     ],
   },

@@ -78,37 +78,41 @@ const Navbar = () => {
           <!-- sum double -->
           <a
             class="nav__link active"
-            onclick="cargar_contenido('sumDouble')"
-          >
+            href="#/sum-double"
+            >
             <i class="bx bx-add-to-queue nav__icon"></i>
             <span class="nav__name">Sum Double</span>
           </a>
           <!-- Image convolute -->
           <a
             class="nav__link active"
-            onclick="cargar_contenido('imageConvolute')"
-          >
+            href="#/image-convolute"
+            >
             <i class="bx bx-image-alt nav__icon"></i>
             <span class="nav__name">Image Convolute</span>
           </a>
           <!-- Video convolute -->
           <a
             class="nav__link active"
-            onclick="cargar_contenido('videoConvolute')"
-          >
+            href="#/video-convolute"
+            >
             <i class="bx bx-image-alt nav__icon"></i>
             <span class="nav__name">Video Convolute</span>
           </a>
           <!-- suma consecutiva -->
           <a
             class="nav__link active"
-            onclick="cargar_contenido('sumConsecutiva')"
+            href="#/sum-consecutiva"
           >
             <i class="bx bx-add-to-queue nav__icon"></i>
             <span class="nav__name">Consecutive Add</span>
           </a>
           <!-- Ray tracer -->
-          <a class="nav__link" onclick="cargar_contenido('rayTracer')">
+          <a
+            class="nav__link"
+            href="https://rockycott.github.io/wasm-rust-raytracer-js/"
+            target="_blank"
+            >
             <i class="bx bx-leaf nav__icon"></i>
             <span class="nav__name">RayTracer</span>
           </a>
