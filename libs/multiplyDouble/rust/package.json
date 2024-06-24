@@ -1,0 +1,14 @@
+{
+  "name": "multiply-double",
+  "version": "0.1.0",
+  "files": [
+    "multiply_double_bg.wasm",
+    "multiply_double.js",
+    "multiply_double.d.ts"
+  ],
+  "module": "multiply_double.js",
+  "types": "multiply_double.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

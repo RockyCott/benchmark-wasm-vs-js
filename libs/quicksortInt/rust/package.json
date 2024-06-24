@@ -1,0 +1,14 @@
+{
+  "name": "quick-sort-int",
+  "version": "0.1.0",
+  "files": [
+    "quick_sort_int_bg.wasm",
+    "quick_sort_int.js",
+    "quick_sort_int.d.ts"
+  ],
+  "module": "quick_sort_int.js",
+  "types": "quick_sort_int.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

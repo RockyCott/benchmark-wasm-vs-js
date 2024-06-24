@@ -1,0 +1,14 @@
+{
+  "name": "collision-detection",
+  "version": "0.1.0",
+  "files": [
+    "collision_detection_bg.wasm",
+    "collision_detection.js",
+    "collision_detection.d.ts"
+  ],
+  "module": "collision_detection.js",
+  "types": "collision_detection.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

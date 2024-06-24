@@ -1,0 +1,14 @@
+{
+  "name": "quick-sort-double",
+  "version": "0.1.0",
+  "files": [
+    "quick_sort_double_bg.wasm",
+    "quick_sort_double.js",
+    "quick_sort_double.d.ts"
+  ],
+  "module": "quick_sort_double.js",
+  "types": "quick_sort_double.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
