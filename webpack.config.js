@@ -91,10 +91,10 @@ module.exports = {
         { from: "libs", to: "libs" },
       ],
     }),
-    new webpack.IgnorePlugin({
-      resourceRegExp: /\.js$/,
-      contextRegExp: /algorithms$/,
-    })
+    // new webpack.IgnorePlugin({
+    //   resourceRegExp: /\.js$/,
+    //   contextRegExp: /algorithms$/,
+    // })
   ],
   devServer: {
     static: path.join(__dirname, "dist"),
