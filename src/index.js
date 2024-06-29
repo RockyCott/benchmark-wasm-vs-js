@@ -10,7 +10,6 @@ const Mostrarmenu = (headerToggle, navbarId) => {
     });
   }
 };
-Mostrarmenu("header-toggle", "navbar");
 
 function colorLink() {
   const linkcolor = document.querySelectorAll(".nav__link");
@@ -22,6 +21,7 @@ function colorLink() {
 }
 
 window.addEventListener("load", () => {
+  Mostrarmenu("header-toggle", "navbar");
   colorLink();
 });
 
