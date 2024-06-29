@@ -6,7 +6,7 @@ const Mostrarmenu = (headerToggle, navbarId) => {
   if (headerToggle && navbarId && toggleBtn) {
     toggleBtn.addEventListener("click", () => {
       nav.classList.toggle("show-menu");
-      toggleBtn.classList.toggle("bx-x");
+      //toggleBtn.classList.toggle("bx-x");
     });
   }
 };
@@ -26,5 +26,6 @@ window.addEventListener("load", () => {
 });
 
 window.addEventListener("hashchange", () => {
+  Mostrarmenu("header-toggle", "navbar");
   colorLink();
 });
